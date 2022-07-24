@@ -17,11 +17,6 @@ group = mavenGroup
 
 repositories {
     maven {
-        name = "JitPack"
-        setUrl("https://jitpack.io")
-    }
-
-    maven {
         name = "Modrinth"
         setUrl("https://api.modrinth.com/maven")
         content {
@@ -36,12 +31,16 @@ dependencies {
 
     val minecraftVersion: String by project
     minecraft("com.mojang", "minecraft", minecraftVersion)
+    
     val yarnMappings: String by project
     mappings("net.fabricmc", "yarn", yarnMappings, null, "v2")
+    
     val loaderVersion: String by project
     modImplementation("net.fabricmc", "fabric-loader", loaderVersion)
+    
     val fabricVersion: String by project
     modImplementation("net.fabricmc.fabric-api", "fabric-api", fabricVersion)
+    
     val fabricKotlinVersion: String by project
     modImplementation("net.fabricmc", "fabric-language-kotlin", fabricKotlinVersion)
 
