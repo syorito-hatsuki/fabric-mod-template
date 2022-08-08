@@ -17,6 +17,14 @@ group = mavenGroup
 
 repositories {
     maven {
+        name = "CurseMaven"
+        setUrl("https://cursemaven.com")
+        content {
+            includeGroup("curse.maven")
+        }
+    }
+
+    maven {
         name = "Modrinth"
         setUrl("https://api.modrinth.com/maven")
         content {
@@ -43,9 +51,6 @@ dependencies {
     
     val fabricKotlinVersion: String by project
     modImplementation("net.fabricmc", "fabric-language-kotlin", fabricKotlinVersion)
-
-//    Template
-//    modImplementation("maven.modrinth", "<modname>", "<modversion>")
 }
 
 tasks {
