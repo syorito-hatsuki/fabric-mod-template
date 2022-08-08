@@ -8,6 +8,6 @@ object TemplateMod : ModInitializer {
     val LOGGER: Logger = LogUtils.getLogger()
 
     override fun onInitialize() {
-        LOGGER.info("Template initialized")
+        LOGGER.info("${javaClass.simpleName} initialized")
     }
 }
