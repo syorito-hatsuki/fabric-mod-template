@@ -21,7 +21,8 @@ object BlocksRegistry {
         }
     }
 
-    private fun Block.create(name: String) {
+    private fun Block.create(name: String): Block {
         BLOCKS[this] = Identifier(TemplateMod.MOD_ID, name)
+        return this
     }
 }

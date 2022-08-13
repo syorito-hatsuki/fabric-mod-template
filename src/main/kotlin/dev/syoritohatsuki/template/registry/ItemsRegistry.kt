@@ -17,7 +17,8 @@ object ItemsRegistry {
         }
     }
 
-    private fun Item.create(name: String) {
+    private fun Item.create(name: String): Item {
         ITEMS[this] = Identifier(MOD_ID, name)
+        return this
     }
 }
