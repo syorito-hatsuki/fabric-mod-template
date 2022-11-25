@@ -25,10 +25,10 @@
     "template.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.14.8",
+    "fabricloader": ">=${loaderVersion}",
     "fabric": "*",
-    "fabric-language-kotlin": ">=1.8.2+kotlin.1.7.10",
-    "minecraft": "1.19.x",
-    "java": ">=17"
+    "fabric-language-kotlin": ">=${fabricKotlinVersion}",
+    "minecraft": "${minecraftVersion}",
+    "java": ">=${javaVersion}"
   }
 }

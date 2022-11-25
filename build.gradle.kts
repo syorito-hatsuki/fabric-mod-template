@@ -9,6 +9,11 @@ base {
     archivesName.set(archivesBaseName)
 }
 
+val minecraftVersion: String by project
+val loaderVersion: String by project
+val fabricKotlinVersion: String by project
+val javaVersion = JavaVersion.VERSION_17
+
 val modVersion: String by project
 version = modVersion
 
@@ -18,7 +23,7 @@ group = mavenGroup
 repositories {
     maven {
         name = "CurseMaven"
-        setUrl("https://cursemaven.com")
+        url = uri("https://cursemaven.com")
         content {
             includeGroup("curse.maven")
         }
@@ -26,7 +31,7 @@ repositories {
 
     maven {
         name = "Modrinth"
-        setUrl("https://api.modrinth.com/maven")
+        url = uri("https://api.modrinth.com/maven")
         content {
             includeGroup("maven.modrinth")
         }
@@ -34,28 +39,20 @@ repositories {
 }
 
 dependencies {
-    //FOR SERVER STARTING
-    implementation("io.netty", "netty-all", "4.1.79.Final")
-
-    val minecraftVersion: String by project
     minecraft("com.mojang", "minecraft", minecraftVersion)
-    
+
     val yarnMappings: String by project
     mappings("net.fabricmc", "yarn", yarnMappings, null, "v2")
-    
-    val loaderVersion: String by project
+
     modImplementation("net.fabricmc", "fabric-loader", loaderVersion)
-    
+
     val fabricVersion: String by project
     modImplementation("net.fabricmc.fabric-api", "fabric-api", fabricVersion)
-    
-    val fabricKotlinVersion: String by project
+
     modImplementation("net.fabricmc", "fabric-language-kotlin", fabricKotlinVersion)
 }
 
 tasks {
-    val javaVersion = JavaVersion.VERSION_17
-
     withType<JavaCompile> {
         options.encoding = "UTF-8"
         sourceCompatibility = javaVersion.toString()
@@ -63,17 +60,39 @@ tasks {
         options.release.set(javaVersion.toString().toInt())
     }
 
-    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> { kotlinOptions { jvmTarget = javaVersion.toString() } }
+    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        kotlinOptions {
+            jvmTarget = javaVersion.toString()
+        }
+    }
 
-    jar { from("LICENSE") { rename { "${it}_${base.archivesName}" } } }
+    jar {
+        from("LICENSE") {
+            rename {
+                "${it}_${base.archivesName}"
+            }
+        }
+    }
 
     processResources {
         inputs.property("version", project.version)
-        filesMatching("fabric.mod.json") { expand(mutableMapOf("version" to project.version)) }
+        filesMatching("fabric.mod.json") {
+            expand(
+                mutableMapOf(
+                    "version" to project.version,
+                    "loaderVersion" to loaderVersion,
+                    "minecraftVersion" to minecraftVersion,
+                    "fabricKotlinVersion" to fabricKotlinVersion,
+                    "javaVersion" to javaVersion.toString()
+                )
+            )
+        }
     }
 
     java {
-        toolchain { languageVersion.set(JavaLanguageVersion.of(javaVersion.toString())) }
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(javaVersion.toString()))
+        }
         sourceCompatibility = javaVersion
         targetCompatibility = javaVersion
         withSourcesJar()

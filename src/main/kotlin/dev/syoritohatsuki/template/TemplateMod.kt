@@ -9,7 +9,7 @@ import org.slf4j.Logger
 
 object TemplateMod : ModInitializer {
 
-    val MOD_ID = "template"
+    const val MOD_ID = "template"
     val LOGGER: Logger = LogUtils.getLogger()
 
     override fun onInitialize() {
