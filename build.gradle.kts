@@ -9,10 +9,10 @@ base {
     archivesName.set(archivesBaseName)
 }
 
-val minecraftVersion: String by project
-val loaderVersion: String by project
 val fabricKotlinVersion: String by project
 val javaVersion = JavaVersion.VERSION_17
+val loaderVersion: String by project
+val minecraftVersion: String by project
 
 val modVersion: String by project
 version = modVersion
