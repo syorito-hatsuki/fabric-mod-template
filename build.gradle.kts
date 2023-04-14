@@ -1,3 +1,6 @@
+import java.time.format.DateTimeFormatter
+import java.time.LocalDateTime
+
 plugins {
     id("fabric-loom")
     kotlin("jvm")
@@ -15,27 +18,14 @@ val loaderVersion: String by project
 val minecraftVersion: String by project
 
 val modVersion: String by project
-version = modVersion
+version = "${DateTimeFormatter.ofPattern("yyyy.MM").format(LocalDateTime.now())}.$modVersion"
 
 val mavenGroup: String by project
 group = mavenGroup
 
 repositories {
-    maven {
-        name = "CurseMaven"
-        url = uri("https://cursemaven.com")
-        content {
-            includeGroup("curse.maven")
-        }
-    }
-
-    maven {
-        name = "Modrinth"
-        url = uri("https://api.modrinth.com/maven")
-        content {
-            includeGroup("maven.modrinth")
-        }
-    }
+    maven("https://cursemaven.com")
+    maven("https://api.modrinth.com/maven")
 }
 
 dependencies {
