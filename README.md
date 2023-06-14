@@ -48,7 +48,7 @@
 
 ![In-Game ScreenShot][screenshot]
 
-A cobblestone generator, a classic of any SkyBlock. However, I'm bored with classic generators that generate only 1 kind of block. That's why I made my own mod, with a wide range of customization options.
+Somebody once told me the world is gonna roll me
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
