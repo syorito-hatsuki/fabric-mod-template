@@ -116,7 +116,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 [modrinth-shield]: https://img.shields.io/modrinth/v/<repo>?label=Modrinth&style=for-the-badge
 [modrinth-url]: https://modrinth.com/mod/<repo>
 
-[screenshot]: https://cdn-raw.modrinth.com/data/xPsKRMUF/images/047a2072ffe8fe5368479d0560eb2bbca2b1ef5f.png
+[screenshot]: <image-url>
 
 [fabric]: https://img.shields.io/badge/fabric%20api-DBD0B4?style=for-the-badge
 [fabric-language-kotlin]: https://img.shields.io/badge/fabric%20language%20kotlin-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white
