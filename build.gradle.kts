@@ -1,5 +1,10 @@
-import java.time.format.DateTimeFormatter
-import java.time.LocalDateTime
+val fabricKotlinVersion: String by project
+val javaVersion = JavaVersion.VERSION_17
+val loaderVersion: String by project
+val minecraftVersion: String by project
+val modVersion: String by project
+val mavenGroup: String by project
+val modId: String by project
 
 plugins {
     id("fabric-loom")
@@ -8,24 +13,15 @@ plugins {
 }
 
 base {
-    val archivesBaseName: String by project
-    archivesName.set(archivesBaseName)
+    archivesName.set("$modId-$modVersion-$minecraftVersion")
 }
 
-val fabricKotlinVersion: String by project
-val javaVersion = JavaVersion.VERSION_17
-val loaderVersion: String by project
-val minecraftVersion: String by project
-
-val modVersion: String by project
-version = "${DateTimeFormatter.ofPattern("yyyy.MM").format(LocalDateTime.now())}.$modVersion"
-
-val mavenGroup: String by project
-group = mavenGroup
-
 repositories {
-    maven("https://cursemaven.com")
-    maven("https://api.modrinth.com/maven")
+    maven("https://api.modrinth.com/maven") {
+        content {
+            includeGroup("maven.modrinth")
+        }
+    }
 }
 
 dependencies {
@@ -39,7 +35,14 @@ dependencies {
     val fabricVersion: String by project
     modImplementation("net.fabricmc.fabric-api", "fabric-api", fabricVersion)
 
+
     modImplementation("net.fabricmc", "fabric-language-kotlin", fabricKotlinVersion)
+
+    val modMenuBadgesLibVersion: String by project
+    include(modImplementation("maven.modrinth", "modmenu-badges-lib", modMenuBadgesLibVersion))
+
+    val duckyUpdaterLibVersion: String by project
+    include(modImplementation("maven.modrinth", "ducky-updater-lib", duckyUpdaterLibVersion))
 }
 
 tasks {
@@ -57,25 +60,29 @@ tasks {
     }
 
     jar {
-        from("LICENSE") {
-            rename {
-                "${it}_${base.archivesName}"
-            }
-        }
+        from("LICENSE")
     }
 
     processResources {
-        inputs.property("version", project.version)
+        val modName: String by project
+        val modDescription: String by project
+
         filesMatching("fabric.mod.json") {
             expand(
                 mutableMapOf(
-                    "version" to project.version,
+                    "modId" to modId,
+                    "modName" to modName,
+                    "modVersion" to modVersion,
+                    "modDescription" to modDescription,
                     "loaderVersion" to loaderVersion,
                     "minecraftVersion" to minecraftVersion,
                     "fabricKotlinVersion" to fabricKotlinVersion,
                     "javaVersion" to javaVersion.toString()
                 )
             )
+        }
+        filesMatching("template.mixins.json") {
+            expand(mutableMapOf("modId" to modId))
         }
     }
 
